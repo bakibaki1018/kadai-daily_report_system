@@ -39,7 +39,7 @@
                 </table>
 
                 <p>
-                    <a href="<c:url value='/employee/edit?id=${employee.id}' />">この従業員情報を編集する</a>
+                    <a href="<c:url value='/employees/edit?id=${employee.id}' />">この従業員情報を編集する</a>
                 </p>
             </c:when>
             <c:otherwise>
