@@ -21,7 +21,9 @@
                         </tr>
                         <tr>
                             <th>内容</th>
-                            <td><pre><c:out value="${report.content}" /></pre></td>
+                            <td><pre>
+                                    <c:out value="${report.content}" />
+                                </pre></td>
                         </tr>
                         <tr>
                             <th>登録日時</th>
@@ -35,6 +37,48 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <c:choose>
+
+                    <%-- 条件：ログインIDと「いいね」したユーザーIDがおなじだったら「いいね済み」を表示する--%>
+                    <c:when test="${sessionScope.login_employee == good.user_id}">
+                        <form method="POST" action="<c:url value="/goods.destroy" />">
+                            <input type="hidden" name="_token" value="${_token}" />
+                            <button type="submit">いいね済み！</button>
+                        </form>
+                    </c:when>
+
+                    <%-- 上記以外だったら「いいね」を表示する--%>
+                    <c:otherwise>
+                        <form method="POST" action="<c:url value="/goods.create" />">
+                            <input type="hidden" name="_token" value="${_token}" />
+                            <button type="submit">いいね!</button>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+
+
+                <c:if test="${sessionScope.login_employee.id != report.employee.id}">
+
+                    <c:choose>
+                        <c:when test="${sessionScope.login_employee == good.user_id}">
+                            <form method="POST" action="<c:url value="/goods.destroy" />">
+                                <input type="hidden" name="_token" value="${_token}" />
+                                <button type="submit">フォロー中</button>
+                            </form>
+
+                        </c:when>
+                        <%-- 上記以外だったら「フォローする」を表示する--%>
+                        <c:otherwise>
+                            <form method="POST" action="<c:url value="/goods.create" />">
+                                <input type="hidden" name="_token" value="${_token}" />
+                                <button type="submit">フォローする</button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+
+                </c:if>
+
 
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
                     <p>
