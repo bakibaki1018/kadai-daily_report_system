@@ -14,6 +14,7 @@
             <tbody>
                 <tr>
                     <th class="report_name">氏名</th>
+                    <th class="report_follow">フォロー</th>
                     <th class="report_date">日付</th>
                     <th class="report_title">タイトル</th>
                     <th class="report_good">いいね！数</th>
@@ -23,10 +24,33 @@
                     <tr class="row${status.count % 2}">
                         <td class="report_name"><c:out
                                 value="${report.employee.name}" /></td>
+                        <td class="report_follow"><c:if
+                                test="${sessionScope.login_employee.id != report.employee.id}">
+
+                                <c:choose>
+                                    <c:when test="${sessionScope.login_employee == good.user_id}">
+                                        <form method="POST" action="<c:url value="/goods.destroy" />">
+                                            <input type="hidden" name="_token" value="${_token}" />
+                                            <button type="submit">フォロー中</button>
+                                        </form>
+
+                                    </c:when>
+                                    <%-- 上記以外だったら「フォローする」を表示する--%>
+                                    <c:otherwise>
+                                        <form method="POST" action="<c:url value="/goods.create" />">
+                                            <input type="hidden" name="_token" value="${_token}" />
+                                            <button type="submit">フォローする</button>
+                                        </form>
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </c:if></td>
                         <td class="report_date"><fmt:formatDate
                                 value='${report.report_date}' pattern='yyyy-MM-dd' /></td>
                         <td class="report_title">${report.title}</td>
-                        <td class="report_good"><%--いいね数を表示--%></td>
+                        <td class="report_good">
+                            <%--いいね数を表示--%>
+                        </td>
                         <td class="report_action"><a
                             href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
                     </tr>
