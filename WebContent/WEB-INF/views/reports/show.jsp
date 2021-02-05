@@ -26,6 +26,11 @@
                                 </pre></td>
                         </tr>
                         <tr>
+                            <th>いいね！数</th>
+                            <td>
+                                <%--<c:out value="${いいね数を表示させる}"/>--%>
+                            </td>
+                        <tr>
                             <th>登録日時</th>
                             <td><fmt:formatDate value="${report.created_at}"
                                     pattern="yyyy-MM-dd HH:mm:ss" /></td>
